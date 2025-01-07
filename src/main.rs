@@ -2,6 +2,7 @@ mod day01;
 mod day02;
 mod day03;
 mod day04;
+mod day05;
 use std::env;
 
 fn main() {
@@ -27,6 +28,11 @@ fn main() {
             day04::part_one();
             println!("part two");
             day04::part_two();
+        }
+        5 => {
+            day05::part_one();
+            println!("part two");
+            day05::part_two();
         }
         _ => println!("No solution for the given day."),
     };

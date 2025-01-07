@@ -4,7 +4,7 @@ use std::fs::read_to_string;
 pub fn part_one() {
     let mut col1: Vec<i32> = Vec::new();
     let mut col2: Vec<i32> = Vec::new();
-
+    println!();
     let binding = read_to_string("input/day1.txt").unwrap();
     for line in binding.lines() {
         let Some((a, b)) = line.split_once("   ") else {

@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
@@ -49,4 +49,35 @@ pub fn part_one() {
     println!("{:?}", solution);
 }
 
-pub fn part_two() {}
+pub fn part_two() {
+    let file = File::open("input/day5.txt").unwrap();
+    let reader = BufReader::new(file);
+    let mut rules: HashMap<i32, HashSet<i32>> = HashMap::new();
+    let mut line_break = 0;
+    let mut solution = 0;
+    for line in reader.lines() {
+        let line = line.unwrap();
+
+        if line.is_empty() {
+            line_break = 1;
+            continue;
+        }
+
+        if line_break == 0 {
+            let (a, b) = line.split_once('|').unwrap();
+            rules
+                .entry(b.parse::<i32>().unwrap())
+                .or_default()
+                .insert(a.parse::<i32>().unwrap());
+        } else {
+            let mut arr: Vec<i32> = line.split(',').map(|s| s.parse::<i32>().unwrap()).collect();
+
+            if !arr.is_sorted_by(|a, b| rules[b].contains(a)) {
+                arr.sort_by(|a, b| rules[b].contains(a).cmp(&true));
+                solution += arr[arr.len() / 2];
+            }
+        }
+    }
+
+    println!("{:?}", solution);
+}
